@@ -41,6 +41,11 @@ var httpServer = (function(){
         processRequest:function(request,response){
             var hasExt = true;
             var requestUrl = request.url;
+    if (path.normalize(decodeURI(request.url)) !== decodeURI(request.url)) {
+        response.statusCode = 403;
+        response.end();
+        return;
+    }
             var pathName = url.parse(requestUrl).pathname;
 
             //对请求的路径进行解码，防止中文乱码
